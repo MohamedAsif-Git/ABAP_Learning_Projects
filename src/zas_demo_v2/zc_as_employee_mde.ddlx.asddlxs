@@ -1,0 +1,33 @@
+@Metadata.layer: #CORE
+annotate entity ZC_AS_EMPLOYEE
+    with 
+{
+    @UI.lineItem: [{ position: 10 }]
+    @UI.identification: [{ position: 10 }]
+    EmployeeId;
+    
+    @UI.lineItem: [{ position: 20 }]
+    @UI.identification: [{ position: 20 }]
+    EmployeeName;
+    
+    @UI.identification: [{ position: 30 }]
+    Department;
+    
+    @UI.identification: [{ position: 40 }]
+    Designation;
+    
+    @UI.identification: [{ position: 50 }]
+    Salary;
+    
+    @UI.identification: [{ position: 60 }]
+    Email;
+    
+    @UI.identification: [{ position: 70 }]
+    Phone;
+    
+    @UI.identification: [{ position: 80 }]
+    JoinDate;
+    
+    @UI.identification: [{ position: 90 }]
+    Status;
+}
