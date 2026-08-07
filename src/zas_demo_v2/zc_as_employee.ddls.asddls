@@ -10,6 +10,7 @@ as projection on ZI_AS_EMPLOYEE
     Department,
     Designation,
     Salary,
+    AnnualSalary,
     Email,
     Phone,
     JoinDate,

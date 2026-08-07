@@ -5,6 +5,10 @@ CLASS lhc_ZI_AS_EMPLOYEE DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys REQUEST requested_authorizations FOR zi_as_employee RESULT result.
     METHODS validateemployee FOR VALIDATE ON SAVE
       IMPORTING keys FOR zi_as_employee~validateemployee.
+    METHODS setCreateauditfields FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR zi_as_employee~setCreateauditfields.
+    METHODS calculateAnnualSalary FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR zi_as_employee~calculateAnnualSalary.
 
 ENDCLASS.
 
@@ -67,5 +71,62 @@ CLASS lhc_ZI_AS_EMPLOYEE IMPLEMENTATION.
   ENDMETHOD.
 
 
+
+  METHOD setCreateAuditFields.
+    READ ENTITIES OF zi_as_employee IN LOCAL MODE
+    ENTITY zi_as_employee ALL FIELDS WITH CORRESPONDING #( keys )
+    RESULT DATA(lt_employee).
+
+    IF lt_employee[] IS NOT INITIAL.
+      GET TIME STAMP FIELD DATA(lv_timestamp).
+
+      MODIFY ENTITIES OF zi_as_employee IN LOCAL MODE
+      ENTITY zi_as_employee
+      UPDATE FROM VALUE #(
+          FOR ls_employee IN lt_employee (
+          %tky = ls_employee-%tky
+
+          CreatedBy = sy-uname
+          CreatedAt = lv_timestamp
+          LastChangedBy = sy-uname
+          LastChangedAt = lv_timestamp
+
+          %control-CreatedBy = if_abap_behv=>mk-on
+          %control-CreatedAt = if_abap_behv=>mk-on
+          %control-LastChangedBy = if_abap_behv=>mk-on
+          %control-LastChangedAt = if_abap_behv=>mk-on
+          )
+      ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD calculateAnnualSalary.
+    DATA lt_update TYPE TABLE FOR UPDATE zi_as_employee.
+    READ ENTITIES OF zi_as_employee
+  IN LOCAL MODE
+  ENTITY zi_as_employee
+  FIELDS ( Salary )
+  WITH CORRESPONDING #( keys )
+  RESULT DATA(lt_employee).
+
+    LOOP AT lt_employee INTO DATA(ls_employee).
+
+      APPEND VALUE #(
+        %tky = ls_employee-%tky
+        AnnualSalary = ls_employee-Salary * 12
+
+        %control-AnnualSalary = if_abap_behv=>mk-on
+       ) TO lt_update.
+
+    ENDLOOP.
+
+    MODIFY ENTITIES OF zi_as_employee IN LOCAL MODE
+    ENTITY zi_as_employee
+    UPDATE FIELDS ( AnnualSalary )
+    WITH lt_update.
+
+  ENDMETHOD.
 
 ENDCLASS.

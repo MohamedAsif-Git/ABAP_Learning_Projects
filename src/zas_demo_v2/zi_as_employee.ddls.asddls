@@ -9,6 +9,7 @@ define root view entity ZI_AS_EMPLOYEE
       department      as Department,
       designation     as Designation,
       salary          as Salary,
+      annualsalary    as AnnualSalary,
       email           as Email,
       phone           as Phone,
       join_date       as JoinDate,

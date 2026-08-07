@@ -14,6 +14,7 @@ etag master LastChangedAt
       Department    = department;
       Designation   = designation;
       Salary        = salary;
+      AnnualSalary  = annualsalary;
       Email         = email;
       Phone         = phone;
       JoinDate      = join_date;
@@ -27,11 +28,14 @@ etag master LastChangedAt
   update;
   delete;
 
+  determination setCreateAuditFields on modify { create; }
+  determination calculateAnnualSalary on modify { field Salary; }
+
   validation validateEmployee on save { create; update; }
 
   field ( readonly:update ) EmployeeId;
   field ( readonly )
-  //EmployeeId
+  AnnualSalary,
   CreatedAt,
   CreatedBy,
   LastChangedAt,
