@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZAS_EMP_MSG</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Employee message class</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZAS_EMP_MSG</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Employee Name cannot be blank</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZAS_EMP_MSG</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Salary must be greator than zero</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZAS_EMP_MSG</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Invalid Email address</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

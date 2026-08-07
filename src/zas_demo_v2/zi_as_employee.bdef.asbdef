@@ -26,6 +26,9 @@ etag master LastChangedAt
   create;
   update;
   delete;
+
+  validation validateEmployee on save { create; update; }
+
   field ( readonly:update ) EmployeeId;
   field ( readonly )
   //EmployeeId

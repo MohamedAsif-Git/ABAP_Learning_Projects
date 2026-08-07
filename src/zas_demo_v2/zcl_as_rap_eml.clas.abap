@@ -21,14 +21,14 @@ CLASS zcl_as_rap_eml IMPLEMENTATION.
       CREATE
       FROM VALUE #(
         (
-          %cid = 'EMP001'
+          %cid = 'EMP000'
 
-          EmployeeId   = 'EMP001'
-          EmployeeName = 'Asif'
+          EmployeeId   = 'EMP003'
+          EmployeeName = 'Rasiq'
           Department   = 'IT'
-          Designation  = 'ABAP Developer'
-          Salary       = '60000'
-          Email        = 'asif@test.com'
+          Designation  = 'Insurance Manager'
+          Salary       = '50000'
+          Email        = 'rasiq@test.com'
           Phone        = '9876543210'
           JoinDate     = '20260805'
           Status       = 'ACTIVE'
@@ -48,10 +48,27 @@ CLASS zcl_as_rap_eml IMPLEMENTATION.
       REPORTED DATA(reported)
       MAPPED   DATA(mapped).
 
-    COMMIT ENTITIES.
+*    out->write( mapped ).
+*    out->write( failed ).
+    "out->write( reported ).
 
-    out->write( mapped ).
-    out->write( failed ).
-    out->write( reported ).
+*    LOOP AT reported-zi_as_employee INTO DATA(ls_reported).
+*        out->write( ls_reported-%msg->if_message~get_text(  ) ).
+*    ENDLOOP.
+
+    COMMIT ENTITIES
+    RESPONSE OF zi_as_employee
+    FAILED DATA(failed_commit)
+    REPORTED DATA(reported_commit).
+
+    IF failed_commit-zi_as_employee IS INITIAL.
+    "Only for console
+    "General practice - success message handled in ACTIONS not in VALIDATIONS
+      out->write( 'Employee created successfully' ).
+    ELSE.
+      LOOP AT reported_commit-zi_as_employee INTO DATA(ls_reported_commit).
+        out->write( ls_reported_commit-%msg->if_message~get_text(  ) ).
+      ENDLOOP.
+    ENDIF.
   ENDMETHOD.
 ENDCLASS.
